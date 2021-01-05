@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "299869799332",
+    "project_id": "summer-factor-294501",
+    "storage_bucket": "summer-factor-294501.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299869799332:android:167390d15ec3854889b731",
+        "android_client_info": {
+          "package_name": "com.quick.belanjakt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299869799332-hmk0nevcnv6u45piqtujdms3oosm5b3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDctDLop8QdGBPCaIXBxB6GpPet-LZTe90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299869799332-hmk0nevcnv6u45piqtujdms3oosm5b3e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
