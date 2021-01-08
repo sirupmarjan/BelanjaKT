@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.quick.belanjakt.views.DashBoardActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -50,6 +51,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         btn_download.setOnClickListener {
             downloadProcedure()
+        }
+
+        btn_switch.setOnClickListener {
+            startActivity(Intent(this@MainActivity, DashBoardActivity::class.java))
         }
     }
 
@@ -86,7 +91,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         if (requestCode == 111 && resultCode == RESULT_OK) {
             val selectedFile : String = data?.data.toString() //The uri with the location of the file
-            data?.type
             tv_contentAddress.text = selectedFile+" and type : " + selectedFile.substringAfterLast(".","")
 
             if (data != null) {

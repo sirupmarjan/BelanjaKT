@@ -110,4 +110,14 @@
         app:layout_constraintTop_toBottomOf="@id/et_deskripsi"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:text="View"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_process"
+        app:layout_constraintEnd_toStartOf="@+id/btn_process"
+        app:layout_constraintTop_toTopOf="@+id/btn_process" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

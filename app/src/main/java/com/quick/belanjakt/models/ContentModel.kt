@@ -5,5 +5,5 @@ var judul : String = "",
 var deskripsi : String ="",
 var harga : Int? = null,
 var imageUrl : String = "",
-var realdate : Int? = null
+var realdate : String = ""
         )
