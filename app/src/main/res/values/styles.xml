@@ -16,8 +16,13 @@
     </style>
 
     <style name="textDiskonStriked" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">#E1E1E1</item>
-        <item name="android:textSize">9sp</item>
+        <item name="android:textColor">#878787</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="textDiskonPercentBackground" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">#F6A7BD</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="textProductPrize" parent="TextAppearance.AppCompat.Body1">

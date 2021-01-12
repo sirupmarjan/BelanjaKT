@@ -5,7 +5,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.RatingBar
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -24,11 +26,12 @@ import java.util.*
 
 private const val TAG = "DashBoardActivity"
 
-class DashBoardActivity : AppCompatActivity() {
+class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListener {
     var db = FirebaseFirestore.getInstance()
     lateinit var selectedFile: String
     lateinit var mStorageReference: StorageReference
     lateinit var selectedFileUri: Uri
+    var ratingKonten : Int = 0
     lateinit var selectedFileExtension: String
     lateinit var selectedFileUploadReference :String
     lateinit var selectedFileUploadname :String
@@ -44,7 +47,7 @@ class DashBoardActivity : AppCompatActivity() {
 
             startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
         }
-
+        ratingBarInput.onRatingBarChangeListener = this
         btn_process.setOnClickListener {
             getContent()
         }
@@ -54,10 +57,14 @@ class DashBoardActivity : AppCompatActivity() {
 
     private fun getContent() {
         val realTime = SimpleDateFormat("yyyyMMddhhmmss")
-
+        var mFreeShipping : Int = 0
+        if (cb_freeOngkir.isChecked){
+            mFreeShipping = 1
+        }
         var mJudul: String = et_judul.text.toString()
         var mDeskripsi: String = et_deskripsi.text.toString()
         var mHarga: Int = et_harga.text.toString().toInt()
+        var mHargaAwal : Int = et_hargaAwal.text.toString().toInt()
         val realDate = realTime.format(Date())
 
         if (!mJudul.equals("") || !mDeskripsi.equals("") ||  mHarga != null || !selectedFile.equals("")){
@@ -65,6 +72,9 @@ class DashBoardActivity : AppCompatActivity() {
                 mJudul,
                 mDeskripsi,
                 mHarga,
+                mHargaAwal,
+                mFreeShipping,
+                ratingKonten,
                 selectedFileUploadReference,
                 realDate
             )
@@ -117,6 +127,11 @@ class DashBoardActivity : AppCompatActivity() {
 
         if (requestCode == 111 && resultCode == RESULT_OK) {
             selectedFileUri = data?.data!!
+
+            Glide.with(this)
+                .load(selectedFileUri)
+                .into(iv_preview)
+
             selectedFile = data?.data.toString() //The uri with the location of the file
             selectedFileExtension = selectedFile.substringAfterLast(".", "")
 //            tv_contentAddress.text = selectedFile+" and type : " + selectedFile.substringAfterLast(".","")
@@ -124,5 +139,9 @@ class DashBoardActivity : AppCompatActivity() {
             selectedFileUploadReference = refDataUpload
 
         }
+    }
+
+    override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+        ratingKonten = rating.toInt()
     }
 }

@@ -9,6 +9,19 @@
         android:layout_height="match_parent"
         android:paddingBottom="8dp">
 
+        <TextView
+            style="@style/textDiskonPercentBackground"
+            android:background="@drawable/bg_round_shape_pink"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:id="@+id/tv_persenDiskon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="-80%" />
         <ImageView
             android:id="@+id/iv_konten"
             android:layout_width="150dp"
@@ -59,20 +72,28 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_namaKonten"
             tools:text="bla bla bla asdadjadsa" />
 
+        <TextView
+            android:id="@+id/tv_ratingScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="(4.0)"
+            app:layout_constraintStart_toStartOf="@+id/tv_hargaKonten"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hargaKonten" />
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/ratingBarYellow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:numStars="5"
             android:rating="3.5"
-            android:stepSize=".5"
-            app:layout_constraintStart_toStartOf="@+id/tv_hargaKonten"
-            app:layout_constraintTop_toBottomOf="@+id/tv_hargaKonten" />
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ratingScore"
+            app:layout_constraintStart_toEndOf="@+id/tv_ratingScore"
+            app:layout_constraintTop_toTopOf="@+id/tv_ratingScore" />
 
         <ImageView
-            android:visibility=""
             android:id="@+id/iv_freeOngkir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

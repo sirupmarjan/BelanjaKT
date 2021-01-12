@@ -15,7 +15,26 @@ class ContentOfflineDatabase(var context: Context?) : SQLiteOpenHelper(
                 "documentID TEXT," +
                 "judul TEXT," +
                 "harga TEXT," +
+                "harga_awal TEXT," +
                 "deskripsi TEXT," +
+                "free_shipping INTEGER," +
+                "rating INTEGER," +
+                "image_url TEXT," +
+                "real_date INTGER"+
+                ")"
+        db?.execSQL(mQuery)
+    }
+    fun createTable(){
+        val db = this.writableDatabase
+        mQuery = "CREATE TABLE IF NOT EXISTS tb_konten(" +
+                "_id INTEGER PRIMARY KEY," +
+                "documentID TEXT," +
+                "judul TEXT," +
+                "harga TEXT," +
+                "harga_awal TEXT," +
+                "deskripsi TEXT," +
+                "free_shipping INTEGER," +
+                "rating INTEGER," +
                 "image_url TEXT," +
                 "real_date INTGER"+
                 ")"
@@ -35,6 +54,11 @@ class ContentOfflineDatabase(var context: Context?) : SQLiteOpenHelper(
         mQuery = "DELETE FROM tb_konten"
         db.execSQL(mQuery)
     }
+//    fun delete() {
+//        val db = this.writableDatabase
+//        mQuery = "DROP TABLE IF EXISTS tb_konten"
+//        db.execSQL(mQuery)
+//    }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")

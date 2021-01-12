@@ -27,6 +27,15 @@
         app:layout_constraintBottom_toBottomOf="@id/txt_tumbnail"
         app:layout_constraintStart_toEndOf="@id/txt_tumbnail"
         app:layout_constraintTop_toTopOf="@id/txt_tumbnail" />
+
+    <ImageView
+        android:id="@+id/iv_preview"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_uploadTumbnail" />
     <TextView
         android:id="@+id/txt_tumbnail"
         android:text="Tumbnail"
@@ -46,7 +55,7 @@
         android:layout_marginTop="32dp"
         android:text="Judul"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_uploadTumbnail" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_preview" />
 
     <EditText
         android:id="@+id/et_judul"
@@ -75,10 +84,32 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@id/txt_harga"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_harga"
         app:layout_constraintTop_toTopOf="@id/txt_harga" />
+    <TextView
+        android:id="@+id/txt_hargaAwal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Harga Awal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_harga" />
+
+    <EditText
+        android:id="@+id/et_hargaAwal"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@id/txt_hargaAwal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt_hargaAwal"
+        app:layout_constraintTop_toTopOf="@id/txt_hargaAwal" />
     <TextView
         android:id="@+id/txt_deskripsi"
         android:text="Deskripsi"
@@ -87,7 +118,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_harga"
+        app:layout_constraintTop_toBottomOf="@id/et_hargaAwal"
         />
 
     <EditText
@@ -100,6 +131,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_deskripsi"
         app:layout_constraintTop_toTopOf="@id/txt_deskripsi" />
+
+    <CheckBox
+        android:id="@+id/cb_freeOngkir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GRATIS ONGKIR"
+        app:layout_constraintStart_toStartOf="@+id/txt_deskripsi"
+        app:layout_constraintTop_toBottomOf="@+id/et_deskripsi" />
+
+    <RatingBar
+        android:id="@+id/ratingBarInput"
+        style="@style/ratingBarYellow"
+        android:numStars="5"
+        android:stepSize="1"
+        android:isIndicator="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/et_deskripsi"
+        app:layout_constraintStart_toEndOf="@+id/cb_freeOngkir"
+        app:layout_constraintTop_toBottomOf="@+id/et_deskripsi" />
     <Button
         android:id="@+id/btn_process"
         android:text="proses"

@@ -34,6 +34,7 @@ class ViewPageActivity : AppCompatActivity() {
         setContentView(v)
         helperKonten = ContentOfflineDatabase(this)
         helperKonten.delete()
+//        helperKonten.createTable()
         getData()
         binding.rgLayout.setOnCheckedChangeListener { group, checkedId ->
             initView()
@@ -48,7 +49,10 @@ class ViewPageActivity : AppCompatActivity() {
                         val value = ContentValues()
                         value.put("documentID", document.id)
                         value.put("judul", document.data["judul"].toString())
-                        value.put("harga", document.data["harga"].toString())
+                        value.put("harga", document.data["harga"].toString().toInt())
+                        value.put("harga_awal", document.data["hargaAwal"].toString().toInt())
+                        value.put("free_shipping", document.data["freeOngkir"].toString().toInt())
+                        value.put("rating", document.data["rating"].toString().toInt())
                         value.put("image_url", document.data["imageUrl"].toString())
                         value.put("deskripsi", document.data["deskripsi"].toString())
                         value.put("real_date", document.data["realdate"].toString())
@@ -64,10 +68,10 @@ class ViewPageActivity : AppCompatActivity() {
 
     private fun initView() {
         if (binding.rbListView.isChecked) {
-            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_list)
+            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid)
             binding.rvList.apply {
                 adapter = mAdapter
-                layoutManager = LinearLayoutManager(this@ViewPageActivity)
+                layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
             }
         } else {
             mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid)
