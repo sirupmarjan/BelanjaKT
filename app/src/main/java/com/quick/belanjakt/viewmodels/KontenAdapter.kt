@@ -66,7 +66,8 @@ class KontenAdapter(c: Cursor?, cxt: Context?, lyt : Int?) : RecyclerView.Adapte
             holder.mDiskonKonten.visibility = View.GONE
             holder.mDiscPercent.visibility = View.GONE
         }else{
-            var percentDiscount :Int = ((diskon-harga)*100)/harga
+            var disc : Long = diskon.toLong()-harga.toLong()
+            var percentDiscount :Long = disc * 100 / diskon.toLong()
             holder.mDiscPercent.text = "-$percentDiscount%"
         }
 
