@@ -75,7 +75,10 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
         var mJudul: String = et_judul.text.toString()
         var mDeskripsi: String = et_deskripsi.text.toString()
         var mHarga: Int = et_harga.text.toString().toInt()
-        var mHargaAwal : Int = et_hargaAwal.text.toString().toInt()
+        var mHargaAwal : Int = 0
+        if (!et_hargaAwal.text.toString().equals("")){
+            mHargaAwal = et_hargaAwal.text.toString().toInt()
+        }
         val realDate = realTime.format(Date())
 
         if (!mJudul.equals("") || !mDeskripsi.equals("") ||  mHarga != null || !selectedFile.equals("")){

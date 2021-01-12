@@ -3,7 +3,6 @@ package com.quick.belanjakt.viewmodels
 import android.content.Context
 import android.database.Cursor
 import android.graphics.Paint
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,9 @@ class KontenAdapter(c: Cursor?, cxt: Context?, lyt : Int?) : RecyclerView.Adapte
         val mHargaKonten : TextView = v.findViewById(R.id.tv_hargaKonten)
         val mDiskonKonten : TextView = v.findViewById(R.id.tv_diskonKonten)
         val mRating : RatingBar = v.findViewById(R.id.ratingBar)
+        val mRatingScore : TextView = v.findViewById(R.id.tv_ratingScore)
         val mFreeShiping : ImageView = v.findViewById(R.id.iv_freeOngkir)
+        val mDiscPercent : TextView = v.findViewById(R.id.tv_persenDiskon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -60,11 +61,22 @@ class KontenAdapter(c: Cursor?, cxt: Context?, lyt : Int?) : RecyclerView.Adapte
                 .into(holder.mTumbnail)
         }
         holder.mNamaKonten.text = judul
+
+        if (diskon == 0){
+            holder.mDiskonKonten.visibility = View.GONE
+            holder.mDiscPercent.visibility = View.GONE
+        }else{
+            var percentDiscount :Int = ((diskon-harga)*100)/harga
+            holder.mDiscPercent.text = "-$percentDiscount%"
+        }
+
         holder.mDiskonKonten.apply {
             paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             text = formatRupiah.format(diskon)
         }
+
         holder.mRating.rating = rating.toFloat()
+        holder.mRatingScore.text = "($rating)"
         holder.mHargaKonten.text = formatRupiah.format(harga)
         if (freeOngkir != 1){
             holder.mFreeShiping.visibility = View.GONE
