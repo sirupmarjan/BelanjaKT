@@ -1,9 +1,7 @@
 package com.quick.belanjakt.viewmodels
 
-import android.app.Activity
 import android.content.Context
 import android.database.Cursor
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +13,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.quick.belanjakt.R
 
-class KontenAdapter(c: Cursor?, cxt: Context?) : RecyclerView.Adapter<KontenAdapter.Holder>() {
+class KontenAdapter(c: Cursor?, cxt: Context?, lyt : Int?) : RecyclerView.Adapter<KontenAdapter.Holder>() {
     private val cursor: Cursor = c!!
     private val context : Context = cxt!!
+    private val layout : Int = lyt!!
     lateinit var mStorageReference: StorageReference
     class Holder(v: View):RecyclerView.ViewHolder(v) {
         val mTumbnail : ImageView = v.findViewById(R.id.iv_konten)
@@ -27,7 +26,7 @@ class KontenAdapter(c: Cursor?, cxt: Context?) : RecyclerView.Adapter<KontenAdap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-       return Holder(LayoutInflater.from(parent.context).inflate(R.layout.layout_list, parent, false))
+       return Holder(LayoutInflater.from(parent.context).inflate(layout, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -38,7 +37,7 @@ class KontenAdapter(c: Cursor?, cxt: Context?) : RecyclerView.Adapter<KontenAdap
         val harga : String = cursor.getString(cursor.getColumnIndex("harga"))
         val deskripsi : String = cursor.getString(cursor.getColumnIndex("deskripsi"))
         val riversRef: StorageReference = mStorageReference.child(pathString)
-
+        holder.mTumbnail.clipToOutline = true
         riversRef.downloadUrl.addOnSuccessListener { Uri ->
             Glide.with(context)
                 .load(Uri.toString())
