@@ -68,6 +68,13 @@
         app:layout_constraintStart_toEndOf="@id/txt_judul"
         app:layout_constraintTop_toTopOf="@id/txt_judul" />
 
+    <CheckBox
+        android:id="@+id/cb_diskon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DISKON"
+        app:layout_constraintStart_toStartOf="@+id/txt_harga"
+        app:layout_constraintTop_toBottomOf="@+id/et_harga" />
     <TextView
         android:id="@+id/txt_harga"
         android:layout_width="wrap_content"
@@ -89,17 +96,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_harga"
         app:layout_constraintTop_toTopOf="@id/txt_harga" />
+
     <TextView
+        android:visibility="gone"
         android:id="@+id/txt_hargaAwal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="Harga Awal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_harga" />
+        app:layout_constraintTop_toBottomOf="@+id/cb_diskon" />
 
     <EditText
+        android:visibility="gone"
         android:id="@+id/et_hargaAwal"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -110,16 +120,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_hargaAwal"
         app:layout_constraintTop_toTopOf="@id/txt_hargaAwal" />
+
     <TextView
         android:id="@+id/txt_deskripsi"
-        android:text="Deskripsi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:text="Deskripsi"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_hargaAwal"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/et_hargaAwal" />
 
     <EditText
         android:id="@+id/et_deskripsi"
@@ -136,13 +146,15 @@
         android:id="@+id/cb_freeOngkir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="GRATIS ONGKIR"
-        app:layout_constraintStart_toStartOf="@+id/txt_deskripsi"
-        app:layout_constraintTop_toBottomOf="@+id/et_deskripsi" />
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBarInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ratingBarInput" />
 
     <RatingBar
         android:id="@+id/ratingBarInput"
-        style="@style/ratingBarYellow"
+
         android:numStars="5"
         android:stepSize="1"
         android:isIndicator="false"
@@ -152,15 +164,16 @@
         app:layout_constraintEnd_toEndOf="@+id/et_deskripsi"
         app:layout_constraintStart_toEndOf="@+id/cb_freeOngkir"
         app:layout_constraintTop_toBottomOf="@+id/et_deskripsi" />
+
     <Button
         android:id="@+id/btn_process"
-        android:text="proses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/et_deskripsi"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:text="proses"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarInput" />
 
     <Button
         android:id="@+id/btnView"

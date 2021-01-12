@@ -73,6 +73,8 @@
             tools:text="bla bla bla asdadjadsa" />
 
         <TextView
+            android:textSize="11sp"
+            android:textColor="#000"
             android:id="@+id/tv_ratingScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

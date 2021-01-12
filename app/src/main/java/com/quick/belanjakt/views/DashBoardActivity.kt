@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.RatingBar
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -48,6 +49,16 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
             startActivityForResult(Intent.createChooser(intent, "Select a file"), 111)
         }
         ratingBarInput.onRatingBarChangeListener = this
+        cb_diskon.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                txt_hargaAwal.visibility = View.VISIBLE
+                et_hargaAwal.visibility = View.VISIBLE
+            }else{
+                txt_hargaAwal.visibility = View.GONE
+                et_hargaAwal.visibility = View.GONE
+            }
+        }
+
         btn_process.setOnClickListener {
             getContent()
         }

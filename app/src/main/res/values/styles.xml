@@ -21,7 +21,7 @@
     </style>
 
     <style name="textDiskonPercentBackground" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">#F6A7BD</item>
+        <item name="android:textColor">#FBD4DF</item>
         <item name="android:textSize">12sp</item>
     </style>
 
