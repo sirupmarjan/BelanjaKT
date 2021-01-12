@@ -6,26 +6,27 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/iv_konten"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/round_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <TextView
             android:id="@+id/tv_namaKonten"
+            style="@style/textProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:textColor="#000"
-            android:textSize="16sp"
+            android:fontFamily="sans-serif"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_konten"
@@ -33,31 +34,52 @@
 
         <TextView
             android:id="@+id/tv_hargaKonten"
+            style="@style/textProductPrize"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:textColor="#000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_namaKonten"
-            tools:text="harganya ini" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_diskonKonten"
+            tools:text="Rp12.000.000" />
 
         <TextView
-            android:id="@+id/tv_deskripsiKonten"
+            android:id="@+id/tv_diskonKonten"
+            style="@style/textDiskonStriked"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
             android:ellipsize="end"
             android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_hargaKonten"
+            app:layout_constraintTop_toBottomOf="@+id/tv_namaKonten"
             tools:text="bla bla bla asdadjadsa" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/ratingBarYellow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize=".5"
+            app:layout_constraintStart_toStartOf="@+id/tv_hargaKonten"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hargaKonten" />
+
+        <ImageView
+            android:visibility=""
+            android:id="@+id/iv_freeOngkir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_free_ongkir"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

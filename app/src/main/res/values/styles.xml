@@ -7,4 +7,29 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="textProductName" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="textDiskonStriked" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">#E1E1E1</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="textProductPrize" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/colorOrange</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="ratingBarYellow" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="backgroundTint">#D1D1D1</item>
+        <item name="android:progressTint">#FFC107</item>
+        <item name="android:secondaryProgressTint">#FF9800</item>
+    </style>
+
 </resources>
