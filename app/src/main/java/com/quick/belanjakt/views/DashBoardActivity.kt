@@ -155,8 +155,6 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
         }
     }
 
-
-
     override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
         ratingKonten = rating.toInt()
     }
