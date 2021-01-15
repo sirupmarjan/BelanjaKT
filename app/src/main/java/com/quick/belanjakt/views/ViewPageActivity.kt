@@ -32,6 +32,7 @@ class ViewPageActivity : AppCompatActivity() {
         binding = ActivityViewPageBinding.inflate(layoutInflater)
         val v: View = binding.root
         setContentView(v)
+        supportActionBar?.hide()
         helperKonten = ContentOfflineDatabase(this)
         helperKonten.delete()
 //        helperKonten.createTable()
@@ -39,6 +40,10 @@ class ViewPageActivity : AppCompatActivity() {
         binding.rgLayout.setOnCheckedChangeListener { group, checkedId ->
             initView()
         }
+        binding.btnSearch.setOnClickListener {
+            initView()
+        }
+
     }
 
     private fun getData() = CoroutineScope(Dispatchers.IO).launch {
@@ -67,33 +72,56 @@ class ViewPageActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        if (binding.rbListView.isChecked) {
-            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid)
+//        if (binding.rbListView.isChecked) {
+//            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid)
+//            binding.rvList.apply {
+//                adapter = mAdapter
+//                layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
+//                addItemDecoration(GridItemDecoration(10,2 ))
+//            }
+//        } else {
+//            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid)
+//            binding.rvList.apply {
+//                adapter = mAdapter
+//                layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
+//                addItemDecoration(GridItemDecoration(10,2))
+//            }
+
+        if (binding.etSeach.text.toString().equals("") || binding.etSeach.text.toString().equals(" ")) {
+            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid, )
             binding.rvList.apply {
                 adapter = mAdapter
                 layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
             }
-        } else {
-            mAdapter = KontenAdapter(helperKonten.select(), this, R.layout.layout_grid)
+        }else{
+            mAdapter = KontenAdapter(helperKonten.selectBy(binding.etSeach.text.toString()), this, R.layout.layout_grid)
             binding.rvList.apply {
                 adapter = mAdapter
                 layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
-//                addItemDecoration(GridItemDecoration(10,2))
             }
         }
 
     }
 
-    class GridItemDecoration(gridSpacingPx: Int, gridSize: Int) : RecyclerView.ItemDecoration() {
+
+    class GridItemDecoration(gridSpacingPx: Int, gridSize: Int) :
+        RecyclerView.ItemDecoration() {
         private var mSizeGridSpacingPx: Int = gridSpacingPx
         private var mGridSize: Int = gridSize
 
         private var mNeedLeftSpacing = false
 
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            val frameWidth = ((parent.width - mSizeGridSpacingPx.toFloat() * (mGridSize - 1)) / mGridSize).toInt()
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            val frameWidth =
+                ((parent.width - mSizeGridSpacingPx.toFloat() * (mGridSize - 1)) / mGridSize).toInt()
             val padding = parent.width / mGridSize - frameWidth
-            val itemPosition = (view.getLayoutParams() as RecyclerView.LayoutParams).viewAdapterPosition
+            val itemPosition =
+                (view.getLayoutParams() as RecyclerView.LayoutParams).viewAdapterPosition
             if (itemPosition < mGridSize) {
                 outRect.top = 0
             } else {

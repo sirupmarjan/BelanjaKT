@@ -49,6 +49,14 @@ class ContentOfflineDatabase(var context: Context?) : SQLiteOpenHelper(
         mQuery = "select * from tb_konten order by real_date desc"
         return db.rawQuery(mQuery, null)
     }
+
+    fun selectBy(key : String): Cursor? {
+        val db = this.writableDatabase
+        mQuery = "select * from tb_konten where judul like '%$key%' order by real_date desc"
+        return db.rawQuery(mQuery, null)
+    }
+
+
     fun delete() {
         val db = this.writableDatabase
         mQuery = "DELETE FROM tb_konten"

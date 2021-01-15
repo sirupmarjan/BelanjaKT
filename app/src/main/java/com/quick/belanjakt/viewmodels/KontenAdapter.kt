@@ -1,6 +1,7 @@
 package com.quick.belanjakt.viewmodels
 
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.graphics.Paint
 import android.view.LayoutInflater
@@ -9,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.quick.belanjakt.R
+import com.quick.belanjakt.views.DetailActivity
 import java.text.NumberFormat
 import java.util.*
 
@@ -46,6 +49,7 @@ class KontenAdapter(c: Cursor?, cxt: Context?, lyt : Int?) : RecyclerView.Adapte
 
         cursor.moveToPosition(position)
         val pathString : String = cursor.getString(cursor.getColumnIndex("image_url"))
+        val doc : String = cursor.getString(cursor.getColumnIndex("documentID"))
         val judul : String = cursor.getString(cursor.getColumnIndex("judul"))
         val diskon : Int = cursor.getInt(cursor.getColumnIndex("harga_awal"))
         val harga : Int = cursor.getInt(cursor.getColumnIndex("harga"))
@@ -82,6 +86,13 @@ class KontenAdapter(c: Cursor?, cxt: Context?, lyt : Int?) : RecyclerView.Adapte
         if (freeOngkir != 1){
             holder.mFreeShiping.visibility = View.GONE
         }
+
+        holder.itemView.setOnClickListener {
+            val i : Intent = Intent(context, DetailActivity::class.java)
+            i.putExtra("doc", doc)
+            context.startActivity(i)
+        }
+
     }
 
     override fun getItemCount(): Int {
