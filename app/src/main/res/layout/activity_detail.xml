@@ -6,12 +6,117 @@
     android:layout_height="match_parent"
     tools:context=".views.DetailActivity">
 
-    <TextView
-        android:id="@+id/tv_doc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/ivProduk"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/colorOrange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_namaKonten"
+        android:maxLines="2"
+        android:ellipsize="end"
+        style="@style/textProductNameLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="INI NAMA DARI KONTENNYA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProduk" />
+
+    <TextView
+        android:id="@+id/tv_persenDiskon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#fff"
+        android:padding="2dp"
+        android:background="@drawable/bg_round_shape_pink"
+        android:text="-80%"
+        app:layout_constraintStart_toStartOf="@+id/tv_namaKonten"
+        app:layout_constraintTop_toBottomOf="@+id/tv_namaKonten" />
+
+    <TextView
+        android:id="@+id/tv_diskonKonten"
+        style="@style/textDiskonStrikedLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Rp150.000"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_persenDiskon"
+        app:layout_constraintStart_toEndOf="@+id/tv_persenDiskon"
+        app:layout_constraintTop_toTopOf="@+id/tv_persenDiskon" />
+
+    <TextView
+        android:id="@+id/tv_hargaKonten"
+        style="@style/textProductPrizeLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Rp120.000"
+        app:layout_constraintStart_toStartOf="@+id/tv_persenDiskon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_diskonKonten" />
+
+    <ImageView
+        android:id="@+id/iv_freeOngkir"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_free_ongkir"
+        app:layout_constraintBottom_toTopOf="@+id/view1"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RatingBar
+        android:id="@+id/ratingBarKonten"
+        style="@style/ratingBarYellow"
+        android:numStars="5"
+        android:stepSize="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_hargaKonten"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hargaKonten" />
+
+    <View
+        android:id="@id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBarKonten" />
+
+    <TextView
+        android:id="@+id/txt_deskripsi"
+        android:textColor="@color/colorOrange"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Deskripsi"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+    <TextView
+        android:id="@+id/tv_descriptionKonten"
+        android:textColor="#2B2B2B"
+        android:layout_width="match_parent"
+        android:textSize="18dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="dfghjkljhygtfdretliuydtlgjffghj"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_deskripsi" />
 </androidx.constraintlayout.widget.ConstraintLayout>
