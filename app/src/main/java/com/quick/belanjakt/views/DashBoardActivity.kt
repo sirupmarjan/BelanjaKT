@@ -1,13 +1,17 @@
 package com.quick.belanjakt.views
 
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import android.widget.Toast
+import androidx.core.net.toFile
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -16,12 +20,16 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.quick.belanjakt.R
 import com.quick.belanjakt.models.ContentModel
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
+import id.zelory.compressor.constraint.destination
 import kotlinx.android.synthetic.main.activity_dash_board.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,6 +44,7 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
     lateinit var selectedFileExtension: String
     lateinit var selectedFileUploadReference :String
     lateinit var selectedFileUploadname :String
+    lateinit var compressedImageFile : File
     private val contentCollectionRef = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,8 +113,11 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
             contentCollectionRef.collection("konten")
                 .add(mContent)
             withContext(Dispatchers.IO){
+//                uploadTumbnail(selectedFileUri)
                 uploadTumbnail(selectedFileUri)
+
             }
+
             withContext(Dispatchers.Main){
                 Toast.makeText(this@DashBoardActivity, "Success add content", Toast.LENGTH_SHORT).show()
             }
@@ -141,12 +153,24 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
 
         if (requestCode == 111 && resultCode == RESULT_OK) {
             selectedFileUri = data?.data!!
+            selectedFile = getRealPathFromURI(this, selectedFileUri) //The uri with the location of the file
+//            var fileImage = File(selectedFile)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val folder = filesDir
+                val f = File(folder, "tempFile")
+                f.mkdir()
+
+                compressedImageFile = Compressor.compress(this@DashBoardActivity, File(selectedFile)){
+                    default()
+                    destination(f)
+                }
+            }
 
             Glide.with(this)
                 .load(selectedFileUri)
                 .into(iv_preview)
 
-            selectedFile = data?.data.toString() //The uri with the location of the file
             selectedFileExtension = selectedFile.substringAfterLast(".", "")
 //            tv_contentAddress.text = selectedFile+" and type : " + selectedFile.substringAfterLast(".","")
            val refDataUpload : String = "data/${getRandomString(16)}.$selectedFileExtension"
@@ -157,5 +181,29 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
 
     override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
         ratingKonten = rating.toInt()
+    }
+
+    private fun getRealPathFromURI(context: Context, contentUri: Uri): String {
+        var cursor: Cursor? = null
+        return try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+
+            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+
+            val column_index: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+
+            cursor!!.moveToFirst()
+
+            cursor.getString(column_index)
+
+        } catch (e: Exception) {
+
+
+            ""
+        } finally {
+            if (cursor != null) {
+                cursor.close()
+            }
+        }
     }
 }

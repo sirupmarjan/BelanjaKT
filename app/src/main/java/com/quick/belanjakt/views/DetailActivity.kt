@@ -12,7 +12,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.quick.belanjakt.databinding.ActivityDetailBinding
 import com.quick.belanjakt.models.ContentOfflineDatabase
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
