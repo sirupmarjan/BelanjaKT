@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.RatingBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,11 +26,8 @@ import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.default
 import id.zelory.compressor.constraint.destination
 import kotlinx.android.synthetic.main.activity_dash_board.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,11 +39,11 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
     lateinit var selectedFile: String
     lateinit var mStorageReference: StorageReference
     lateinit var selectedFileUri: Uri
-    var ratingKonten : Int = 0
+    var ratingKonten: Int = 0
     lateinit var selectedFileExtension: String
-    lateinit var selectedFileUploadReference :String
-    lateinit var selectedFileUploadname :String
-    lateinit var compressedImageFile : File
+    lateinit var selectedFileUploadReference: String
+    lateinit var selectedFileUploadname: String
+    lateinit var compressedImageFile: File
     private val contentCollectionRef = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +58,10 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
         }
         ratingBarInput.onRatingBarChangeListener = this
         cb_diskon.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 txt_hargaAwal.visibility = View.VISIBLE
                 et_hargaAwal.visibility = View.VISIBLE
-            }else{
+            } else {
                 txt_hargaAwal.visibility = View.GONE
                 et_hargaAwal.visibility = View.GONE
             }
@@ -71,26 +70,39 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
         btn_process.setOnClickListener {
             getContent()
         }
-        btnView.setOnClickListener { startActivity(Intent(this@DashBoardActivity, ViewPageActivity::class.java)) }
+        btnView.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@DashBoardActivity,
+                    ViewPageActivity::class.java
+                )
+            )
+        }
+        btnShowSimple.setOnClickListener {
+            startActivity(Intent(this@DashBoardActivity, SimpelViewActivity::class.java))
+        }
+        btnIntentCheck.setOnClickListener {
+            startActivity(Intent(this@DashBoardActivity, CheckActivity::class.java))
+        }
 
     }
 
     private fun getContent() {
         val realTime = SimpleDateFormat("yyyyMMddhhmmss")
-        var mFreeShipping : Int = 0
-        if (cb_freeOngkir.isChecked){
+        var mFreeShipping: Int = 0
+        if (cb_freeOngkir.isChecked) {
             mFreeShipping = 1
         }
         var mJudul: String = et_judul.text.toString()
         var mDeskripsi: String = et_deskripsi.text.toString()
         var mHarga: Int = et_harga.text.toString().toInt()
-        var mHargaAwal : Int = 0
-        if (!et_hargaAwal.text.toString().equals("")){
+        var mHargaAwal: Int = 0
+        if (!et_hargaAwal.text.toString().equals("")) {
             mHargaAwal = et_hargaAwal.text.toString().toInt()
         }
         val realDate = realTime.format(Date())
 
-        if (!mJudul.equals("") || !mDeskripsi.equals("") ||  mHarga != null || !selectedFile.equals("")){
+        if (!mJudul.equals("") || !mDeskripsi.equals("") || mHarga != null || !selectedFile.equals("")) {
             val mContent = ContentModel(
                 mJudul,
                 mDeskripsi,
@@ -102,32 +114,44 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
                 realDate
             )
             sendContent(mContent)
-        }else{
-            Toast.makeText(this, "Ups, anda belum melengkapi seluruh form", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Ups, anda belum melengkapi seluruh form", Toast.LENGTH_SHORT)
+                .show()
         }
 
     }
 
-    private fun sendContent(mContent: ContentModel) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            contentCollectionRef.collection("konten")
-                .add(mContent)
-            withContext(Dispatchers.IO){
-//                uploadTumbnail(selectedFileUri)
+    private fun sendContent(mContent: ContentModel) {
+        var pDialog = AlertDialog.Builder(this)
+        var deffer = CoroutineScope(Dispatchers.IO).launch {
+            try {
+                contentCollectionRef.collection("konten").add(mContent)
                 uploadTumbnail(selectedFileUri)
 
-            }
-
-            withContext(Dispatchers.Main){
-                Toast.makeText(this@DashBoardActivity, "Success add content", Toast.LENGTH_SHORT).show()
-            }
-
-        }catch (e : Exception){
-            Log.d(TAG, "sendContent: "+e.localizedMessage)
-            withContext(Dispatchers.Main){
-                Toast.makeText(this@DashBoardActivity, "Something Wrong", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Log.d(TAG, "sendContent: " + e.localizedMessage)
             }
         }
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(200)
+            if (deffer.isActive) {
+                var v: View = LayoutInflater.from(this@DashBoardActivity)
+                    .inflate(R.layout.popup_loading, null, false)
+
+                pDialog.setView(v)
+                    .setCancelable(false)
+                val b = pDialog.create()
+                try {
+                    b.show()
+
+                }finally {
+                    b.dismiss()
+
+                }
+            }
+
+        }
+
     }
 
     private fun uploadTumbnail(dataSelected: Uri) = CoroutineScope(Dispatchers.IO).launch {
@@ -141,7 +165,7 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
             }
     }
 
-    private fun getRandomString(length: Int) : String {
+    private fun getRandomString(length: Int): String {
         val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         return (1..length)
             .map { charset.random() }
@@ -153,19 +177,21 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
 
         if (requestCode == 111 && resultCode == RESULT_OK) {
             selectedFileUri = data?.data!!
-            selectedFile = getRealPathFromURI(this, selectedFileUri) //The uri with the location of the file
+            selectedFile =
+                getRealPathFromURI(this, selectedFileUri) //The uri with the location of the file
 //            var fileImage = File(selectedFile)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                val folder = filesDir
-                val f = File(folder, "tempFile")
-                f.mkdir()
-
-                compressedImageFile = Compressor.compress(this@DashBoardActivity, File(selectedFile)){
-                    default()
-                    destination(f)
-                }
-            }
+//            CoroutineScope(Dispatchers.IO).launch {
+//                val folder = filesDir
+//                val f = File(folder, "tempFile")
+//                f.mkdir()
+//
+//                compressedImageFile =
+//                    Compressor.compress(this@DashBoardActivity, selectedFileUri.toFile()) {
+//                        default()
+//                        destination(f)
+//                    }
+//            }
 
             Glide.with(this)
                 .load(selectedFileUri)
@@ -173,7 +199,7 @@ class DashBoardActivity : AppCompatActivity(), RatingBar.OnRatingBarChangeListen
 
             selectedFileExtension = selectedFile.substringAfterLast(".", "")
 //            tv_contentAddress.text = selectedFile+" and type : " + selectedFile.substringAfterLast(".","")
-           val refDataUpload : String = "data/${getRandomString(16)}.$selectedFileExtension"
+            val refDataUpload: String = "data/${getRandomString(16)}.$selectedFileExtension"
             selectedFileUploadReference = refDataUpload
 
         }

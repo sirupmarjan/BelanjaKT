@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".views.DetailActivity">
 
+    <LinearLayout
+        android:elevation="200dp"
+        android:background="#6D000000"
+        android:id="@+id/lloverlay"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+        <ProgressBar
+            android:elevation="200dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
     <ImageView
         android:id="@+id/ivProduk"
         android:layout_width="match_parent"

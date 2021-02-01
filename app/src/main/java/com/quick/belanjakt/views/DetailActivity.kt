@@ -32,9 +32,12 @@ class DetailActivity : AppCompatActivity() {
         val localeID = Locale("in", "ID")
         formatRupiah = NumberFormat.getCurrencyInstance(localeID)
         kontenHelper = ContentOfflineDatabase(this)
-        getItemRun(ss)
-
-
+//        getItemRun(ss)
+        if(getItemRun(ss).isActive){
+            binding.lloverlay.visibility = View.VISIBLE
+        }else{
+            binding.lloverlay.visibility = View.GONE
+        }
     }
 
     private fun getItemRun(
@@ -121,6 +124,8 @@ class DetailActivity : AppCompatActivity() {
             binding.ivFreeOngkir.visibility = View.GONE
         }
         binding.ratingBarKonten.rating = nRating.toFloat()
+
+        binding.lloverlay.visibility = View.GONE
 
     }
 

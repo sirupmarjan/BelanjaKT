@@ -93,12 +93,15 @@ class ViewPageActivity : AppCompatActivity() {
                 adapter = mAdapter
                 layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
             }
+            binding.lloverlay.visibility = View.GONE
         }else{
             mAdapter = KontenAdapter(helperKonten.selectBy(binding.etSeach.text.toString()), this, R.layout.layout_grid)
             binding.rvList.apply {
                 adapter = mAdapter
                 layoutManager = GridLayoutManager(this@ViewPageActivity, 2)
             }
+            binding.lloverlay.visibility = View.GONE
+
         }
 
     }
